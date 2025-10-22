@@ -61,6 +61,6 @@ jobs:
           MYSQL_PORT: 3306
           MYSQL_DB: telecom_db
           MYSQL_USER: root
-          MYSQL_PASSWORD: Mysql#10
+          MYSQL_PASSWORD: root
         run: |
           python src/pipeline.py
