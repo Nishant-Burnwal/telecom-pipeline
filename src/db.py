@@ -30,7 +30,7 @@ def get_data_from_mysql():
     Fetch data from MySQL database and return as pandas DataFrame
     """
     try:
-        query = "SELECT * FROM network_logs"  # Adjust table name as needed
+        query = "SELECT * FROM network_logs"
         df = pd.read_sql(query, engine)
         return df
     except Exception as e:
