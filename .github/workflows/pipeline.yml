@@ -16,14 +16,14 @@ jobs:
       mysql:
         image: mysql:8
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DB }}
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: telecom_db
+          MYSQL_USER: telecom_user
+          MYSQL_PASSWORD: telecom_pass
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping --silent"
+          --health-cmd="mysqladmin ping -h 127.0.0.1 --silent"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -46,10 +46,11 @@ jobs:
         run: |
           echo "Waiting for MySQL to start..."
           for i in {1..30}; do
-            if mysql -h 127.0.0.1 -u${{ secrets.MYSQL_USER }} -p${{ secrets.MYSQL_PASSWORD }} -e "SELECT 1" &> /dev/null; then
-              echo "MySQL is ready!"
+            if mysql -h 127.0.0.1 -u telecom_user -ptelecom_pass -e "SELECT 1" telecom_db &> /dev/null; then
+              echo "✅ MySQL is ready!"
               break
             fi
+            echo "⏳ Still waiting..."
             sleep 2
           done
 
@@ -57,8 +58,8 @@ jobs:
         env:
           MYSQL_HOST: 127.0.0.1
           MYSQL_PORT: 3306
-          MYSQL_DB: ${{ secrets.MYSQL_DB }}
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_DB: telecom_db
+          MYSQL_USER: root
+          MYSQL_PASSWORD: Mysql#10
         run: |
           python src/pipeline.py
