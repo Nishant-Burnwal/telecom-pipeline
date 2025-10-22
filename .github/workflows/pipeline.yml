@@ -56,7 +56,7 @@ jobs:
           MYSQL_PORT: 3306
           MYSQL_DB: telecom_db
           MYSQL_USER: root
-          MYSQL_PASSWORD: root   # ✅ Matches the MySQL service password in CI
+          MYSQL_PASSWORD: root   # Matches the MySQL service password in CI
         run: |
           echo "Starting Telecom Data Pipeline..."
           python src/pipeline.py
