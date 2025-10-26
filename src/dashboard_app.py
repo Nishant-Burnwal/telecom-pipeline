@@ -39,18 +39,21 @@ else:
         "bandwidth_usage_mb": "sum"
     }).reset_index()
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-    sns.barplot(data=region_summary, x="region", y="latency_ms", palette="viridis", ax=axes[0])
-    axes[0].set_title("Average Latency by Region")
-    axes[0].set_xlabel("Region")
-    axes[0].set_ylabel("Latency (ms)")
+    # Plot 1 - Latency
+    fig1, ax1 = plt.subplots(figsize=(8, 4))
+    sns.barplot(data=region_summary, x="region", y="latency_ms", palette="viridis", ax=ax1)
+    ax1.set_title("Average Latency by Region")
+    ax1.set_xlabel("Region")
+    ax1.set_ylabel("Latency (ms)")
+    st.pyplot(fig1)
 
-    sns.barplot(data=region_summary, x="region", y="uptime_percent", palette="mako", ax=axes[1])
-    axes[1].set_title("Average Uptime by Region")
-    axes[1].set_xlabel("Region")
-    axes[1].set_ylabel("Uptime (%)")
-
-    st.pyplot(fig)
+    # Plot 2 - Uptime
+    fig2, ax2 = plt.subplots(figsize=(8, 4))
+    sns.barplot(data=region_summary, x="region", y="uptime_percent", palette="mako", ax=ax2)
+    ax2.set_title("Average Uptime by Region")
+    ax2.set_xlabel("Region")
+    ax2.set_ylabel("Uptime (%)")
+    st.pyplot(fig2)
 
     st.divider()
 
@@ -60,12 +63,12 @@ else:
     df["timestamp"] = pd.to_datetime(df["timestamp"])
     time_trend = df.groupby(df["timestamp"].dt.date)["bandwidth_usage_mb"].sum().reset_index()
 
-    fig2, ax2 = plt.subplots(figsize=(10, 5))
-    sns.lineplot(data=time_trend, x="timestamp", y="bandwidth_usage_mb", marker="o", ax=ax2)
-    ax2.set_title("Daily Bandwidth Usage Trend")
-    ax2.set_xlabel("Date")
-    ax2.set_ylabel("Bandwidth (MB)")
-    st.pyplot(fig2)
+    fig3, ax3 = plt.subplots(figsize=(8, 4))
+    sns.lineplot(data=time_trend, x="timestamp", y="bandwidth_usage_mb", marker="o", ax=ax3)
+    ax3.set_title("Daily Bandwidth Usage Trend")
+    ax3.set_xlabel("Date")
+    ax3.set_ylabel("Bandwidth (MB)")
+    st.pyplot(fig3)
 
     st.divider()
 
@@ -74,12 +77,12 @@ else:
 
     top_customers = df.groupby("customer_id")["bandwidth_usage_mb"].sum().sort_values(ascending=False).head(10)
 
-    fig3, ax3 = plt.subplots(figsize=(10, 5))
-    sns.barplot(x=top_customers.index, y=top_customers.values, palette="magma", ax=ax3)
-    ax3.set_title("Top 10 Customers by Bandwidth")
-    ax3.set_xlabel("Customer ID")
-    ax3.set_ylabel("Total Bandwidth (MB)")
-    st.pyplot(fig3)
+    fig4, ax4 = plt.subplots(figsize=(8, 4))
+    sns.barplot(x=top_customers.index, y=top_customers.values, palette="magma", ax=ax4)
+    ax4.set_title("Top 10 Customers by Bandwidth")
+    ax4.set_xlabel("Customer ID")
+    ax4.set_ylabel("Total Bandwidth (MB)")
+    st.pyplot(fig4)
 
     st.divider()
 
