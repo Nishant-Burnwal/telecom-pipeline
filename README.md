@@ -36,10 +36,12 @@ telecom-pipeline/
 │
 ├── .env                      # Environment variables (ignored by git)
 ├── requirements.txt
+│
 ├── .github/
 │   └── workflows/
-│       ├── pipeline.yml      # ETL automation workflow
-│       └── etl_automation.yml# Optional hourly scheduled workflow
+│       ├── pipeline.yml       # ETL automation workflow
+│       └── etl_automation.yml # Optional hourly scheduled workflow
+│
 └── README.md
 
 Setup Instructions
